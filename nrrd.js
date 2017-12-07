@@ -338,7 +338,9 @@ module.exports.parse = function (buffer) {
             ret.data = parseNRRDTextData(ret.buffer, ret.type, ret.sizes);
             break;
         case 'gzip':
-            ret.data = parseNRRDRawData(pako.ungzip(ret.buffer), ret.type, ret.sizes, {
+            ret.encoding = 'raw';
+            ret.buffer = pako.ungzip(ret.buffer).buffer;
+            ret.data = parseNRRDRawData(ret.buffer, ret.type, ret.sizes, {
                 endian: ret.endian, blockSize: ret.blockSize
             });
             break;
