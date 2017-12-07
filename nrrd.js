@@ -1,4 +1,5 @@
 "use strict";
+var pako = require('pako');
 var assert = require('assert');
 
 var lineSeparatorRE = /[ \f\t\v]*\r?\n/;
@@ -335,6 +336,11 @@ module.exports.parse = function (buffer) {
             break;
         case 'ascii':
             ret.data = parseNRRDTextData(ret.buffer, ret.type, ret.sizes);
+            break;
+        case 'gzip':
+            ret.data = parseNRRDRawData(pako.ungzip(ret.buffer), ret.type, ret.sizes, {
+                endian: ret.endian, blockSize: ret.blockSize
+            });
             break;
         default:
             console.warn("Unsupported NRRD encoding: " + ret.encoding);

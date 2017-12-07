@@ -19,5 +19,7 @@
     "tape": "~2.3.0",
     "ndarray": "~1.0.9"
   },
-  "dependencies": {}
+  "dependencies": {
+    "pako": "^1.0.6"
+  }
 }
